@@ -21,4 +21,8 @@ public class IndexPage extends CommonActions {
 
     }
 
+    public void postSetUp(){
+
+    }
+
 }

@@ -25,22 +25,25 @@ public class ReportDescendingTest {
 
     private ReportPage reportPage;
 
-    private boolean Grid = true;
+
 
     @Parameters({"browser","grid"})
     @BeforeTest
     public void setUp(String browser, boolean grid) throws MalformedURLException, InterruptedException {
-        set(browser);
-        Grid = grid;
+        set(browser,grid);
+        indexPage.Grid = grid;
 
     }
 
     @Test(description = "This test is to validate the sort by descending")
     public void ReportDescending() throws InterruptedException {
 
-        if(Grid){
+        if(indexPage.Grid){
             indexPage.existElement(By.id("continue"));
             indexPage.ClickElement(By.id("continue"));
+            reportsPage.date = "02-23-2023";
+        }else {
+            reportsPage.date = "23-02-2023";
         }
 
         //first go to reports
@@ -84,17 +87,33 @@ public class ReportDescendingTest {
         reportPage.TearDown();
     }
 
-    public void set(String browser) throws MalformedURLException {
+    public void set(String browser, boolean grid) throws MalformedURLException {
+
+        if(grid) {
             CommonActions commonActions = new CommonActions(webDriver);
             webDriver = commonActions.SetUp2(browser);
 
             indexPage = new IndexPage(webDriver);
             webDriver = indexPage.SetUp2(browser);
-            
+
             reportsPage = new ReportsPage(webDriver);
             webDriver = reportsPage.SetUp2(browser);
-            
+
             reportPage = new ReportPage(webDriver);
             webDriver = reportPage.SetUp2(browser);
+        }
+        else{
+            CommonActions commonActions = new CommonActions(webDriver);
+            webDriver = commonActions.SetUp(browser);
+
+            indexPage = new IndexPage(webDriver);
+            webDriver = indexPage.SetUp(browser);
+
+            reportsPage = new ReportsPage(webDriver);
+            webDriver = reportsPage.SetUp(browser);
+
+            reportPage = new ReportPage(webDriver);
+            webDriver = reportPage.SetUp(browser);
+        }
     }
 }

@@ -29,13 +29,12 @@ public class CommonActions {
     private final DateTimeFormatter dateTimeFormatter1 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private final DateTimeFormatter dateTimeFormatter2 = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 
+    public String date = "02-23-2023";
+    public boolean Grid = true;
     private final String URL= "https://1f4jm3zb-8080.usw3.devtunnels.ms/";
-    //private final String URL= "file:///Users/leonardo.aviles/Documents/site2/index.html";
+    private final String URL2= "localhost:8080";
 
     private WebDriver webDriver;
-    private WebDriver webDriverC;
-    private WebDriver webDriverE;
-    private WebDriver webDriverF;
     private WebDriverWait wait;
     private final String PATHCHROME = "./src/main/resources/chromedriver";
     private final String PATHEDGE = "./src/main/resources/msedgedriver";
@@ -56,35 +55,30 @@ public class CommonActions {
             switch (browser) {
                 case "chrome":
                     if(webDriver == null) {
-                    WebDriverManager.chromedriver().setup();
-                    System.setProperty("webdriver.chrome.driver", PATHCHROME);
-                    webDriver = new ChromeDriver();
-                        webDriver.get(URL);
+                        WebDriverManager.chromedriver().setup();
+                        System.setProperty("webdriver.chrome.driver", PATHCHROME);
+                        webDriver = new ChromeDriver();
+                        webDriver.get(URL2);
                         webDriver.manage().window().maximize();
                     }
-                    webDriverC = webDriver;
                     break;
                 case "edge":
                     if(webDriver == null) {
-                    WebDriverManager.edgedriver().setup();
-                    System.setProperty("webdriver.edge.driver", PATHEDGE);
-                    webDriver = new EdgeDriver();
-
-                        webDriver.get(URL);
+                        WebDriverManager.edgedriver().setup();
+                        System.setProperty("webdriver.edge.driver", PATHEDGE);
+                        webDriver = new EdgeDriver();
+                        webDriver.get(URL2);
                         webDriver.manage().window().maximize();
                     }
-                    webDriverE = webDriver;
                     break;
                 case "firefox":
                     if(webDriver == null) {
-                    WebDriverManager.firefoxdriver().setup();
-                    System.setProperty("webdriver.gecko.driver", PATHFIREFOX);
-                    webDriver = new FirefoxDriver();
-
-                        webDriver.get(URL);
+                        WebDriverManager.firefoxdriver().setup();
+                        System.setProperty("webdriver.gecko.driver", PATHFIREFOX);
+                        webDriver = new FirefoxDriver();
+                        webDriver.get(URL2);
                         webDriver.manage().window().maximize();
                     }
-                    webDriverF = webDriver;
                     break;
             }
         wait = new WebDriverWait(webDriver, Duration.ofSeconds(30));
@@ -96,13 +90,11 @@ public class CommonActions {
             switch (browser) {
                 case "chrome":
                     if(webDriver == null) {
-                    chromeOptions.setCapability("browserName","chrome");
-                    url = new URL("http://localhost:4444/wd/hub");
-                    webDriver = new RemoteWebDriver(url,chromeOptions);
-
+                        chromeOptions.setCapability("browserName","chrome");
+                        url = new URL("http://localhost:4444/wd/hub");
+                        webDriver = new RemoteWebDriver(url,chromeOptions);
                         webDriver.get(URL);
                         webDriver.manage().window().maximize();
-                        webDriverC = webDriver;
                     }
 
                     break;
@@ -113,18 +105,16 @@ public class CommonActions {
                         webDriver = new RemoteWebDriver(url, edgeOptions);
                         webDriver.get(URL);
                         webDriver.manage().window().maximize();
-                        webDriverE = webDriver;
                     }
 
                     break;
                 case "firefox":
                     if(webDriver == null) {
-                    firefoxOptions.setCapability("browserName","firefox");
-                    url = new URL("http://localhost:4444/wd/hub");
-                    webDriver = new RemoteWebDriver(url,firefoxOptions);
+                        firefoxOptions.setCapability("browserName","firefox");
+                        url = new URL("http://localhost:4444/wd/hub");
+                        webDriver = new RemoteWebDriver(url,firefoxOptions);
                         webDriver.get(URL);
                         webDriver.manage().window().maximize();
-                        webDriverF = webDriver;
                     }
                     break;
             }
@@ -172,7 +162,13 @@ public class CommonActions {
     }
 
     public String obtainCurrentDate(){
-        return  localDate.format(dateTimeFormatter1);
+        if(Grid){
+            return  localDate.format(dateTimeFormatter2);
+        }
+        else {
+            return  localDate.format(dateTimeFormatter1);
+        }
+
     }
 
     public boolean obtainData(By elementTable){

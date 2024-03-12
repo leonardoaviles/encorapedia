@@ -34,7 +34,7 @@ public class ReportsPage extends CommonActions {
     }
 
     public void putFromDate(){
-        SendKeys(fromDate,"23-02-2023");
+        SendKeys(fromDate,date);
     }
 
     public void putToDate(){
